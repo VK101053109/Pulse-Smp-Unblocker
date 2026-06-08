@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 
-const BLOCKED_SERVER_IP = 'java.pulsesmp.net'; 
+const BLOCKED_SERVER_IP = 'java.mc-pulsesmp.net'; 
 const PORT = process.env.PORT || 8080;
 
 const wss = new WebSocket.Server({ port: PORT }, () => {
