@@ -1,17 +1,16 @@
 const WebSocket = require('ws');
 
-// Paste the blocked Eagler IP here (Do NOT include wss://)
-const BLOCKED_SERVER_IP = '://example-blocked-eagler-server.com'; 
+const BLOCKED_SERVER_IP = 'java.pulsesmp.net'; 
 const PORT = process.env.PORT || 8080;
 
 const wss = new WebSocket.Server({ port: PORT }, () => {
-    console.log(`Unblocker running on port ${PORT}`);
+    console.log(`Proxy running on port ${PORT}`);
 });
 
 wss.on('connection', (clientWs) => {
-    console.log('Player connected! Tunnelling to blocked server...');
-
-    // Open the pipeline to the real server
+    console.log('Player connected! Tunneling data to Pulse SMP...');
+    
+    // Connect clean to the target server
     const targetWs = new WebSocket(`wss://${BLOCKED_SERVER_IP}`);
 
     clientWs.on('message', (message) => {
@@ -29,6 +28,6 @@ wss.on('connection', (clientWs) => {
     clientWs.on('close', () => targetWs.close());
     targetWs.on('close', () => clientWs.close());
 
-    clientWs.on('error', (err) => console.error('Your Client Error:', err));
-    targetWs.on('error', (err) => console.error('Target Server Error:', err));
+    clientWs.on('error', (err) => console.error('Eagler Client Error:', err));
+    targetWs.on('error', (err) => console.error('Pulse SMP Server Error:', err));
 });
