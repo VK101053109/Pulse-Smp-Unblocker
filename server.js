@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 
+// UPDATED: Points to the correct Java backend network domain
 const BLOCKED_SERVER_IP = 'java.mc-pulsesmp.net'; 
 const PORT = process.env.PORT || 8080;
 
@@ -10,7 +11,7 @@ const wss = new WebSocket.Server({ port: PORT }, () => {
 wss.on('connection', (clientWs) => {
     console.log('Player connected! Tunneling data to Pulse SMP...');
     
-    // Connect clean to the target server
+    // Connect cleanly using the correct domain name
     const targetWs = new WebSocket(`wss://${BLOCKED_SERVER_IP}`);
 
     clientWs.on('message', (message) => {
